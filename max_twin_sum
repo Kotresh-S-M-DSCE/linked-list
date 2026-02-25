@@ -1,0 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+int pairSum(struct ListNode* head) {
+    struct ListNode *temp=head,*ahead=NULL,*prev=NULL,*temp1=NULL;
+    int count=1,tot=0,sum;
+    if(temp->next->next==NULL)
+    {
+        sum=temp->val+temp->next->val;
+        return sum;
+    }
+    while(temp->next!=NULL)
+    {
+        count+=1;
+        temp=temp->next;
+    }
+    count/=2;
+    temp=head;
+    while(count!=1)
+    {
+        temp=temp->next;
+        count-=1;
+    }
+    temp1=temp->next;
+    temp->next=NULL;
+    while(temp1!=NULL)
+    {
+        ahead=temp1->next;
+        temp1->next=prev;
+        prev=temp1;
+        temp1=ahead;
+    }
+    temp=head;
+    temp1=prev;
+    while(temp1!=NULL)
+    {
+        sum=temp->val+temp1->val;
+        if(sum>tot)
+        {
+            tot=sum;
+        }
+        temp=temp->next;
+        temp1=temp1->next;
+    }
+    return tot;
+}
