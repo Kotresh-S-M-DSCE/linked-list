@@ -1,0 +1,93 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode temp1=list1;
+        ListNode temp2=list2;
+        ListNode ret=null;
+        ListNode trav=null;
+        while(temp1!=null||temp2!=null)
+        {
+            ListNode node;
+            if(temp1!=null&&temp2!=null)
+            {
+                if(temp1.val>temp2.val)
+                {
+                    node=new ListNode(temp2.val);
+                    temp2=temp2.next;
+                }
+                else if(temp1.val<temp2.val)
+                {
+                    node=new ListNode(temp1.val);
+                    temp1=temp1.next;
+                }
+                else
+                {
+                    node=new ListNode(temp1.val);
+                    ListNode node1=new ListNode(temp2.val);
+                    temp1=temp1.next;
+                    temp2=temp2.next;
+                    if(ret==null)
+                    {
+                        ret=node1;
+                        trav=node1;
+                    }
+                    else
+                    {
+                        trav.next=node1;
+                        trav=trav.next;
+                    }
+                }
+                if(ret==null)
+                {
+                    ret=node;
+                    trav=node;
+                }
+                else
+                {
+                    trav.next=node;
+                    trav=trav.next;
+                }
+            }
+            else if(temp1==null)
+            {
+                node=new ListNode(temp2.val);
+                if(ret==null)
+                {
+                    ret=node;
+                    trav=node;
+                }
+                else
+                {
+                    trav.next=node;
+                    trav=trav.next;
+                }
+                temp2=temp2.next;
+            }
+            else
+            {
+                node=new ListNode(temp1.val);
+                if(ret==null)
+                {
+                    ret=node;
+                    trav=node;
+                }
+                else
+                {
+                    trav.next=node;
+                    trav=trav.next;
+                }
+                temp1=temp1.next;
+            }
+        }
+        return ret;
+    }
+}
