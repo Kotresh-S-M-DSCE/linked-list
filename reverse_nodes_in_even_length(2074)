@@ -1,0 +1,63 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseEvenLengthGroups(ListNode head) {
+        ListNode temp=head,start=head,prev=head,back=head;
+        int count=0,num=1;
+        while(temp!=null)
+        {
+            count++;
+            back=temp;
+            if(count==num)
+            {
+                count=0;
+                num++;
+                if((num-1)%2==0)
+                {
+                    ListNode node=temp.next;
+                    prev.next=temp;
+                    ListNode trav=start,hold=node;
+                    while(trav!=null&&trav!=node)
+                    {
+                        ListNode ahead=trav.next;
+                        trav.next=hold;
+                        hold=trav;
+                        trav=ahead;
+                    }
+                    prev=start;
+                    start=node;
+                    temp=node;
+                }
+                else
+                {
+                    prev=temp;
+                    start=temp.next;
+                    temp=temp.next;
+                }
+            }
+            else
+                temp=temp.next;
+        }
+        if(count%2==0&&count!=0)
+        {
+            prev.next=back;
+            ListNode trav=start,hold=null;
+            while(trav!=null)
+            {
+                ListNode ahead=trav.next;
+                trav.next=hold;
+                hold=trav;
+                trav=ahead;
+            }
+        }
+        return head;
+    }
+}
