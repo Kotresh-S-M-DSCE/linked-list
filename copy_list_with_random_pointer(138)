@@ -1,0 +1,77 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head==null)
+            return head;
+        Map<Node,Node> map=new HashMap<>();
+        Node temp=head,ret=null,trav=null;
+        Node node=new Node(head.val);
+        ret=node;
+        map.put(head,ret);
+        if(head.random!=null)
+        {
+            if(map.containsKey(head.random))
+            {
+                Node cur=map.get(head.random);
+                ret.random=cur;
+            }
+            else
+            {
+                Node cur=new Node(head.random.val);
+                ret.random=cur;
+                map.put(head.random,ret.random);
+            }
+        }
+        else
+            ret.random=null;
+        temp=temp.next;
+        trav=ret;
+        while(temp!=null)
+        {
+            if(map.containsKey(temp))
+            {
+                Node cur=map.get(temp);
+                trav.next=cur;
+            }
+            else
+            {
+                Node cur=new Node(temp.val);
+                trav.next=cur;
+                map.put(temp,trav.next);
+            }
+            trav=trav.next;
+            if(temp.random!=null)
+            {
+                if(map.containsKey(temp.random))
+                {
+                    Node rand=map.get(temp.random);
+                    trav.random=rand;
+                }
+                else
+                {
+                    Node rand=new Node(temp.random.val);
+                    trav.random=rand;
+                    map.put(temp.random,trav.random);
+                }
+            }
+            else
+                trav.random=null;
+            temp=temp.next;
+        }
+        return ret;
+    }
+}
